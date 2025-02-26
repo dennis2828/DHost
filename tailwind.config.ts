@@ -23,7 +23,7 @@ export default {
   		colors: {
         darkGray:"#100F0F",
         softGray:"#5c5a5a",
-        lightCyan:"#94B6BA",
+        lightCyan:"#5da6ce",
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
   			card: {

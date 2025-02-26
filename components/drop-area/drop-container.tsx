@@ -4,6 +4,8 @@ import { useState, useRef } from "react";
 import axios from "axios";
 import { toast } from "sonner";
 import ImagePreview from "./image-preview";
+import ImageDetails from "./image-details";
+import ImagePrivacy from "./image-privacy";
 
 const DropContainer = () => {
   const [file, setFile] = useState<File | null>(null);
@@ -118,10 +120,9 @@ const DropContainer = () => {
         <p className="text-center mt-3">
           Your hosted image:
         </p>
-        <div className="flex border-b border-lightCyan cursor-pointer group pb-1">
-          <p className="text-sm mx-auto text-softGray max-w-[400px] truncate group-hover:text-softGray/90 duration-100">{imageUrl}
-          </p>
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#5c5a5a" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-copy group-hover:text-softGray/90 duration-100"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+        <ImageDetails imageUrl={imageUrl} />
+        <div className="mt-3">
+          <ImagePrivacy />
         </div>
         </>
       )}

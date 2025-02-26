@@ -10,6 +10,7 @@ const poppins = Poppins({subsets:['latin'],
 export const metadata: Metadata = {
   title: "DHost",
   description: "Free & Fast image hosting",
+  icons:"./globe.svg"
 };
 
 export default function RootLayout({
@@ -20,7 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${poppins.className} antialiased bg-darkGray text-white`}
+        className={`${poppins.className} antialiased bg-darkGray text-white overflow-x-hidden`}
       >
         {children}
         <Toaster />
