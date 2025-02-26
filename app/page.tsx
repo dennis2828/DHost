@@ -1,13 +1,14 @@
 import Container from "@/components/container";
 import DropContainer from "@/components/drop-area/drop-container";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export default function Home() {
   return (
     <Container>
       <nav className="py-2">
         <div className="text-end mb-5">
-          <a target="_blank" href="https://github.com/dennis2828/DHost">
+          <Link target="_blank" href="https://github.com/dennis2828/DHost">
             <Button className="border-none shadow-none">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -26,14 +27,14 @@ export default function Home() {
               </svg>
               Github
             </Button>
-          </a>
+          </Link>
         </div>
 
         <div className="flex items-center justify-center animate-pulse gap-3">
           <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-globe"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
-          <a href="/" className="text-[3em] font-bold">
+          <Link href="/" className="text-[3em] font-bold">
             DHost
-          </a>
+          </Link>
         </div>
       </nav>
 
