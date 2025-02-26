@@ -2,10 +2,12 @@
 
 import { useState, useRef } from "react";
 import axios from "axios";
+import Image from "next/image";
 
 const DropContainer = () => {
   const [file, setFile] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [imageUrl, setImageUrl] = useState<string>("");
 
   // Handle file drop
   const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
@@ -48,8 +50,13 @@ const DropContainer = () => {
         headers: { "Content-Type": "multipart/form-data" },
       });
       console.log("File uploaded:", response.data);
+      setImageUrl(response.data.discordResponse);
     } catch (error) {
-      console.error("Upload error:", error);
+      if(axios.isAxiosError(error)){
+        console.log("erroare aici",error);
+        
+      }else
+      console.error("Unexpected error:", error);
     }
   };
 
@@ -84,6 +91,7 @@ const DropContainer = () => {
           </svg>
         </div>
       </div>
+      {imageUrl!='' && <Image src={imageUrl!} alt="cannot display the image" width={250} height={250} />}
     </div>
   );
 };
