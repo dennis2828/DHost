@@ -2,7 +2,8 @@
 
 import { useState, useRef } from "react";
 import axios from "axios";
-import Image from "next/image";
+import { toast } from "sonner";
+import ImagePreview from "./image-preview";
 
 const DropContainer = () => {
   const [file, setFile] = useState<File | null>(null);
@@ -13,7 +14,7 @@ const DropContainer = () => {
   const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
     const droppedFile = event.dataTransfer.files[0];
-    
+
     if (droppedFile) {
       setFile(droppedFile);
       uploadFile(droppedFile);
@@ -28,7 +29,7 @@ const DropContainer = () => {
   // Handle file selection via input
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = event.target.files?.[0];
-    
+
     if (selectedFile) {
       setFile(selectedFile);
       uploadFile(selectedFile);
@@ -46,52 +47,84 @@ const DropContainer = () => {
     formData.append("file", imageFile);
 
     try {
-      const response = await axios.post("http://localhost:5000/upload", formData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      });
+      const response = await axios.post(
+        "http://localhost:5000/upload",
+        formData,
+        {
+          headers: { "Content-Type": "multipart/form-data" },
+        }
+      );
       console.log("File uploaded:", response.data);
       setImageUrl(response.data.discordResponse);
     } catch (error) {
-      if(axios.isAxiosError(error)){
-        console.log("erroare aici",error);
-        
-      }else
-      console.error("Unexpected error:", error);
+      if (axios.isAxiosError(error)) {
+        console.log("erroare aici", error);
+        toast(
+          error.response?.data.error ||
+            error.response?.statusText ||
+            "Something went wrong. Please try again later."
+        );
+      } else toast("Something went wrong. Please try again later.");
     }
   };
 
   return (
-    <div
-      className="border-2 border-transparent hover:border-lightCyan bg-[#161515] w-[250px] h-[250px] rounded-md flex items-center justify-center cursor-pointer duration-100"
-      onDrop={handleDrop}
-      onDragOver={handleDragOver}
-      onClick={handleClick}
-    >
-      <input type="file" ref={fileInputRef} className="hidden" onChange={handleFileChange} />
-      <div className="space-y-3">
-        <p className="text-sm text-center text-softGray italic">
-          {file ? file.name : "Drag or drop image here"}
-        </p>
-        <div className="flex items-center justify-center gap-2">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="lucide lucide-cloud-upload"
-          >
-            <path d="M12 13v8" />
-            <path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242" />
-            <path d="m8 17 4-4 4 4" />
-          </svg>
+    <div className="">
+      <div className="flex flex-col-reverse md:flex-row items-center">
+        <div
+          className="border-2 border-transparent hover:border-lightCyan bg-[#161515] w-[250px] h-[250px] rounded-l-md flex items-center justify-center cursor-pointer duration-100"
+          onDrop={handleDrop}
+          onDragOver={handleDragOver}
+          onClick={handleClick}
+        >
+          <input
+            type="file"
+            ref={fileInputRef}
+            className="hidden"
+            onChange={handleFileChange}
+          />
+          <div className="space-y-3">
+            <p className="text-sm text-center text-softGray italic">
+              {file ? file.name : "Drag or drop image here"}
+            </p>
+            <div className="flex items-center justify-center gap-2">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="lucide lucide-cloud-upload"
+              >
+                <path d="M12 13v8" />
+                <path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242" />
+                <path d="m8 17 4-4 4 4" />
+              </svg>
+            </div>
+          </div>
         </div>
+        {imageUrl && imageUrl.trim() != "" && (
+          <div>
+            <ImagePreview imageSrc={imageUrl} />
+          </div>
+        )}
       </div>
-      {imageUrl!='' && <Image src={imageUrl!} alt="cannot display the image" width={250} height={250} />}
+      {imageUrl && imageUrl.trim() != "" && (
+        <>
+        <p className="text-center mt-3">
+          Your hosted image:
+        </p>
+        <div className="flex border-b border-lightCyan cursor-pointer group pb-1">
+          <p className="text-sm mx-auto text-softGray max-w-[400px] truncate group-hover:text-softGray/90 duration-100">{imageUrl}
+          </p>
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#5c5a5a" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-copy group-hover:text-softGray/90 duration-100"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+        </div>
+        </>
+      )}
     </div>
   );
 };
