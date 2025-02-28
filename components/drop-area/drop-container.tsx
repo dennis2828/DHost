@@ -10,7 +10,9 @@ import ImagePrivacy from "./image-privacy";
 const DropContainer = () => {
   const [file, setFile] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
   const [imageUrl, setImageUrl] = useState<string>("");
+  const [privacy, setPrivacy] = useState<boolean>(false);
 
   // Handle file drop
   const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
@@ -117,12 +119,10 @@ const DropContainer = () => {
       </div>
       {imageUrl && imageUrl.trim() != "" && (
         <>
-        <p className="text-center mt-3">
-          Your hosted image:
-        </p>
-        <ImageDetails imageUrl={imageUrl} />
+        
+        <ImageDetails imageUrl={imageUrl} privacy={privacy} />
         <div className="mt-3">
-          <ImagePrivacy />
+          <ImagePrivacy privacy={privacy} setPrivacy={setPrivacy} />
         </div>
         </>
       )}

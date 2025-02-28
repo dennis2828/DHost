@@ -1,26 +1,34 @@
 "use client";
 
 import { useState } from "react";
+import { Button } from "../ui/button";
 
-const ImageDetails = ({ imageUrl }: { imageUrl: string }) => {
+interface ImageDetailsProps {
+  imageUrl: string;
+  privacy: boolean;
+}
+
+const ImageDetails = ({ imageUrl, privacy }: ImageDetailsProps) => {
   const [copied, setCopied] = useState(false);
 
-  const handleCopy = () => {
-    navigator.clipboard.writeText(imageUrl).then(() => {
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000); // Reset after 2 seconds
-    });
-  };
+  const generateLink = () =>{
+    const proxyImage = `/api/proxy?url=${encodeURIComponent(imageUrl)}`;
+
+    return proxyImage;
+  }
 
   return (
     <div
-      className="flex items-center border-b border-lightCyan cursor-pointer group pb-1 relative"
-      onClick={handleCopy}
+      className="flex items-center justify-center border-b border-lightCyan cursor-pointer group pb-1 relative"
+      
     >
+      
+      <Button onClick={generateLink} className="bg-lightCyan hover:bg-lightCyan/80 my-3">Generate Link</Button>
+      {/*
+      
       <p className="text-sm mx-auto text-softGray max-w-[400px] truncate group-hover:text-softGray/90 duration-100">
         {imageUrl}
       </p>
-      
       {!copied ? (
         <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -47,6 +55,9 @@ const ImageDetails = ({ imageUrl }: { imageUrl: string }) => {
         </>
       )
       }
+      
+      */}
+      
     </div>
   );
 };

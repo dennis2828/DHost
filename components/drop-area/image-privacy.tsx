@@ -1,10 +1,13 @@
 "use client"
 import { Switch } from "@/components/ui/switch"
-import { useState } from "react"
+import { Dispatch, SetStateAction, useState } from "react"
 
-const ImagePrivacy = () => {
+interface ImagePrivacyProps {
+  privacy: boolean;
+  setPrivacy: Dispatch<SetStateAction<boolean>>;
+}
 
-    const [privacy, setPrivacy] = useState<boolean>(false);
+const ImagePrivacy = ({privacy, setPrivacy}: ImagePrivacyProps) => {
 
   return (
     <div>
@@ -12,10 +15,6 @@ const ImagePrivacy = () => {
             <p className="text-sm font-bold">Enable url privacy</p>
             <Switch checked={privacy} onCheckedChange={setPrivacy}/>
         </div>
-        {privacy && (
-            <input className="" />
-        )}
-        
     </div>
   )
 }
