@@ -13,11 +13,11 @@ export const metadataInfo = {
       "Optimized Images",
       "CDN Proxy",
     ],
-    authors: [{ name: "Dennis", url: "https://yourdomain.com" }],
-    metadataBase: new URL("https://yourdomain.com"),
+    authors: [{ name: "Dennis", url: "https://dhost-tprjqn1ha-dennisdingo28s-projects.vercel.app" }],
+    metadataBase: new URL("https://dhost-tprjqn1ha-dennisdingo28s-projects.vercel.app"),
     openGraph: {
       type: "website",
-      url: "https://yourdomain.com",
+      url: "https://dhost-tprjqn1ha-dennisdingo28s-projects.vercel.app",
       title: "Discord Image Proxy - Seamlessly Fetch & Serve Images",
       description:
         "Solve CORS issues by proxying Discord-hosted images using Next.js. Secure and optimized image handling for web apps.",
@@ -40,11 +40,11 @@ export const metadataInfo = {
       creator: "@yourTwitterHandle",
     },
     robots: {
-      index: true, // Allow search engines to index
-      follow: true, // Allow search engines to follow links
+      index: true,
+      follow: true,
     },
     alternates: {
-      canonical: "https://yourdomain.com",
+      canonical: "https://dhost-tprjqn1ha-dennisdingo28s-projects.vercel.app",
     },
   };
   
