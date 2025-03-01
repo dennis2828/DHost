@@ -13,6 +13,7 @@ const DropContainer = () => {
 
   const [imageUrl, setImageUrl] = useState<string>("");
   const [privacy, setPrivacy] = useState<boolean>(false);
+  const [privacyKey, setPrivacyKey] = useState<undefined | string>(undefined);
 
   // Handle file drop
   const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
@@ -59,7 +60,8 @@ const DropContainer = () => {
         }
       );
       console.log("File uploaded:", response.data);
-      setImageUrl(response.data.discordResponse);
+      setImageUrl(response.data.discordResponse.url);
+      setPrivacyKey(response.data.discordResponse.privacyKey);
     } catch (error) {
       if (axios.isAxiosError(error)) {
         console.log("erroare aici", error);
@@ -122,7 +124,7 @@ const DropContainer = () => {
         
         <ImageDetails imageUrl={imageUrl} privacy={privacy} />
         <div className="mt-3">
-          <ImagePrivacy privacy={privacy} setPrivacy={setPrivacy} />
+          <ImagePrivacy privacy={privacy} privacyKey={privacyKey} setPrivacy={setPrivacy} />
         </div>
         </>
       )}

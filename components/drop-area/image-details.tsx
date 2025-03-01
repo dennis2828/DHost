@@ -16,7 +16,7 @@ const ImageDetails = ({ imageUrl, privacy }: ImageDetailsProps) => {
     const currentUrl = window.location.origin; // Gets the current base URL
 
     if (privacy) {
-      setGeneratedLink("");
+      setGeneratedLink(`${currentUrl}/privacy`);
     } else {
       const proxyImage = `/api/proxy?url=${encodeURIComponent(imageUrl)}`;
       setGeneratedLink(`${currentUrl}${proxyImage}`);
