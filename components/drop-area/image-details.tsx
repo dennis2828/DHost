@@ -4,24 +4,15 @@ import { useState } from "react";
 import { Button } from "../ui/button";
 
 interface ImageDetailsProps {
-  imageUrl: string;
-  privacy: boolean;
+
+  generatedLink: string;
+  generateLink: () => void;
 }
 
-const ImageDetails = ({ imageUrl, privacy }: ImageDetailsProps) => {
+const ImageDetails = ({ generatedLink, generateLink }: ImageDetailsProps) => {
   const [copied, setCopied] = useState(false);
-  const [generatedLink, setGeneratedLink] = useState<string>("");
 
-  const generateLink = () => {
-    const currentUrl = window.location.origin; // Gets the current base URL
-
-    if (privacy) {
-      setGeneratedLink(`${currentUrl}/privacy`);
-    } else {
-      const proxyImage = `/api/proxy?url=${encodeURIComponent(imageUrl)}`;
-      setGeneratedLink(`${currentUrl}${proxyImage}`);
-    }
-  };
+  
 
   const handleCopy = () => {
     setCopied(true);

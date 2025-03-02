@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import axios from "axios";
 import { toast } from "sonner";
 import ImagePreview from "./image-preview";
@@ -14,6 +14,7 @@ const DropContainer = () => {
   const [imageUrl, setImageUrl] = useState<string>("");
   const [privacy, setPrivacy] = useState<boolean>(false);
   const [privacyKey, setPrivacyKey] = useState<undefined | string>(undefined);
+  const [generatedLink, setGeneratedLink] = useState<string>("");
 
   // Handle file drop
   const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
@@ -53,7 +54,7 @@ const DropContainer = () => {
 
     try {
       const response = await axios.post(
-        "https://dhost-backend.onrender.com/upload",
+        "https://dhost-backend.onrender.com",
         formData,
         {
           headers: { "Content-Type": "multipart/form-data" },
@@ -73,6 +74,21 @@ const DropContainer = () => {
       } else toast("Something went wrong. Please try again later.");
     }
   };
+
+  const generateLink = () => {
+    const currentUrl = window.location.origin; // Gets the current base URL
+
+    if (privacy) {
+      setGeneratedLink(`${currentUrl}/privacy`);
+    } else {
+      const proxyImage = `/api/proxy?url=${encodeURIComponent(imageUrl)}`;
+      setGeneratedLink(`${currentUrl}${proxyImage}`);
+    }
+  };
+
+  useEffect(()=>{
+    generateLink();
+  },[privacy]);
 
   return (
     <div className="">
@@ -122,7 +138,7 @@ const DropContainer = () => {
       {imageUrl && imageUrl.trim() != "" && (
         <>
         
-        <ImageDetails imageUrl={imageUrl} privacy={privacy} />
+        <ImageDetails generatedLink={generatedLink} generateLink={generateLink} />
         <div className="mt-3">
           <ImagePrivacy privacy={privacy} privacyKey={privacyKey} setPrivacy={setPrivacy} />
         </div>

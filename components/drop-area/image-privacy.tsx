@@ -1,6 +1,6 @@
 "use client"
 import { Switch } from "@/components/ui/switch"
-import { Dispatch, SetStateAction, useState } from "react"
+import { Dispatch, SetStateAction} from "react"
 
 interface ImagePrivacyProps {
   privacy: boolean;
@@ -14,7 +14,9 @@ const ImagePrivacy = ({privacy, privacyKey, setPrivacy}: ImagePrivacyProps) => {
     <div className="flex items-center gap-3">
         <div className="flex items-center gap-2">
             <p className="text-sm font-bold">Enable url privacy</p>
-            <Switch checked={privacy} onCheckedChange={setPrivacy}/>
+            <Switch checked={privacy} onCheckedChange={()=>{
+              setPrivacy(prev=>!prev);
+            }}/>
         </div>
         {privacy && (
           <p className="text-sm font-bold bg-[#161515] p-1 rounded-md">{privacyKey}</p>
